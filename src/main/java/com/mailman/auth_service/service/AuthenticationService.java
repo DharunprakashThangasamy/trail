@@ -11,14 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class AuthenticationService {
 
-    @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired

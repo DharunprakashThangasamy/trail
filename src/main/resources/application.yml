@@ -3,3 +3,6 @@ spring:
     mongodb:
       uri: mongodb+srv://prakashdharun11:GN0FIIq0IKqaDCqs@mailbox-auth-service.mjhoi.mongodb.net/mailbox-auth-service?retryWrites=true&w=majority
       database: mailbox-auth-service
+
+server:
+  port: 8081
