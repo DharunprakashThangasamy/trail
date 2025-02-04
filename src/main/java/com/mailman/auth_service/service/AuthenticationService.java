@@ -6,28 +6,27 @@ import com.mailman.auth_service.models.LoginRequest;
 import com.mailman.auth_service.models.RegisterRequest;
 import com.mailman.auth_service.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@AllArgsConstructor
+@Slf4j
 public class AuthenticationService {
 
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-    private UserRepository userRepository;
+    private final  UserRepository userRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    public AuthenticationService(UserRepository userRepository, JwtUtil jwtUtil, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
-        this.bCryptPasswordEncoder = passwordEncoder;
-    }
     //Register new user
     public void registerUser(RegisterRequest registerRequest) {
         if(userRepository.findByUserName(registerRequest.getUserName()) != null) {
+            log.info("already user found");
             throw new IllegalArgumentException("User with userName or email already exists");
         }
         User newUser = new User();
@@ -44,5 +43,9 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Invalid userName or password");
         }
         return jwtUtil.generateToken(user.getUserName());
+    }
+
+    public List<User> getAllRegisteredUsers() {
+        return userRepository.findAll();
     }
 }

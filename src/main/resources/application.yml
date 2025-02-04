@@ -1,8 +1,26 @@
 spring:
+  application:
+    name: auth-service
   data:
     mongodb:
       uri: mongodb+srv://prakashdharun11:GN0FIIq0IKqaDCqs@mailbox-auth-service.mjhoi.mongodb.net/mailbox-auth-service?retryWrites=true&w=majority
       database: mailbox-auth-service
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Exposes all actuator endpoints
+  endpoint:
+    health:
+      show-details: always  # Show detailed health info
+    shutdown:
+      enabled:
 server:
   port: 8081
+
+pyroscope:
+  server:
+    address: https://profiles-prod-018.grafana.net
+  auth:
+  application:
+    name: auth-service
